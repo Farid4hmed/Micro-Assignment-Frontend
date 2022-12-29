@@ -1,9 +1,11 @@
 import React from "react";
-
+import styles from "../Button/Button.module.css"
 function Button(){
     return (
-        <div>Button</div>
-    )
+        <div className={styles.buttonContainer}>
+            <button className={styles.shuffleButton}>Shuffle</button>
+        </div>
+    );
 
 
 }
