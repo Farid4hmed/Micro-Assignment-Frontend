@@ -1,24 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Filter from "../../components/Filter/Filter";
 import styles from "./Category.module.css";
-
+import { getCategories } from "../../api/discover";
 
 
 function Category(){
-    const [categoryList, setCategoryList] = useState([
-        { name: "Wildlife" },
-        { name: "Landscape" },
-        { name: "Cars" },
-        { name: "Mountain" },
-    ]);
+    async function fetchCategories(){
+        const result = await getCategories();
+        setCategoryList(result);
+    };
 
+     useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const [categoryList, setCategoryList] = useState([]);
+    
     return (
         <div className={styles.containerWrapper}>
-                {categoryList.map((category) => (
-                    <div className={styles.category}>
+            
+                {categoryList && categoryList.map((category, i) => (
+                    <div key={i} className={styles.category}>
                         {category.name}
                     </div>
-                ))}
+                ))} 
+                
     
 
             <div className={styles.filterContainer}>

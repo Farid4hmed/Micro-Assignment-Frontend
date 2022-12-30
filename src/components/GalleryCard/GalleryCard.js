@@ -10,8 +10,9 @@ function GalleryCard(){
     ]);
     return (
         <div className={styles.imageGrid}>
-            {imageList.map((image) => (
-                <div>
+            {imageList.map((image, index) => (
+                <div key={index} 
+                    className={styles.imageCard}>
                     {image.name}
                 </div>
             ))}
