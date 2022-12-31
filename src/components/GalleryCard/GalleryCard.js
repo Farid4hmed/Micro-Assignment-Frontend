@@ -1,19 +1,25 @@
-import React, {useState} from "react";
+import React, { useEffect } from "react";
+import { getImages, getCategories } from "../../api/discover";
 import styles from "./GalleryCard.module.css";
 
-function GalleryCard(){
-    const [imageList, setImageList] = useState([
-        {name: <img className={styles.imageCard} src="" alt =""/> },
-        {name: <img className={styles.imageCard} src="" alt =""/> },
-        {name: <img className={styles.imageCard} src="" alt =""/> },
-        {name: <img className={styles.imageCard} src="" alt =""/> }
-    ]);
+export default function GalleryCard(props){
+    async function fetchImages(){
+        const categ = await getCategories();
+        props.setCurrCateg(categ[0].name);
+        const result = await getImages(categ[0].name);
+        props.setImageList(result);
+    }
+
+    useEffect(() => {
+        fetchImages();
+    }, []);
+
     return (
         <div className={styles.imageGrid}>
-            {imageList.map((image, index) => (
-                <div key={index} 
+            {props.imageList && props.imageList.map((image, i) => (
+                <div key={i} 
                     className={styles.imageCard}>
-                    {image.name}
+                    <img className={styles.imageCard} src={image.imageUrl} alt={image.name}></img>
                 </div>
             ))}
                 
@@ -21,7 +27,4 @@ function GalleryCard(){
     )
 
 
-}
-
-
-export default GalleryCard;
+};

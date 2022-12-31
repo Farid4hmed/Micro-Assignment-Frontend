@@ -1,20 +1,30 @@
 import React from "react";
+import { getImagesByLike, getImagesByDate } from "../../api/discover";
 import styles from "./Filter.module.css";
-function Filter(){
-
+function Filter(props){
+    async function fetchImages(event){
+        if(event.target.value == "1"){
+            const result = await getImagesByLike(props.currCateg, parseInt(event.target.value));
+            props.setImageList(result);
+        }
+        else {
+            const result = await getImagesByDate(props.currCateg, event.target.value);
+            props.setImageList(result);
+        }
+    }
     return (
         <div className={styles.filter}>
-            <select>
-                <option>
+            <select onChange={fetchImages}>
+                <option value="">
                     Filter
                 </option>
-                <option>
+                <option value="asc">
                     Sort by Created Date(asc)
                 </option>
-                <option>
+                 <option value="desc">
                     Sort by Created Date(desc)
                 </option>
-                <option>
+                <option value="1">
                     Filter by like
                 </option>
             </select>

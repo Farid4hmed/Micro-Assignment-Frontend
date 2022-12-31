@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Filter from "../../components/Filter/Filter";
 import styles from "./Category.module.css";
-import { getCategories } from "../../api/discover";
+import { getCategories, getImages} from "../../api/discover.js";
 
-
-function Category(){
+function Category(props){
     async function fetchCategories(){
         const result = await getCategories();
         setCategoryList(result);
     };
 
+    async function fetchImages(categName){
+        props.setCurrCateg(categName);
+        const result = await getImages(categName);
+        props.setImageList(result);
+    }
      useEffect(() => {
         fetchCategories();
     }, []);
+
+   
 
     const [categoryList, setCategoryList] = useState([]);
     
@@ -20,15 +26,15 @@ function Category(){
         <div className={styles.containerWrapper}>
             
                 {categoryList && categoryList.map((category, i) => (
-                    <div key={i} className={styles.category}>
+                    <button onClick={() => {fetchImages(category.name)}} key={i} className={styles.category}>
                         {category.name}
-                    </div>
-                ))} 
+                    </button>
+                ))}
                 
     
 
             <div className={styles.filterContainer}>
-                <Filter />
+                <Filter imageList={props.imageList} setImageList={props.setImageList} currCateg={props.currCateg}/>
             </div>
         </div>
     );
