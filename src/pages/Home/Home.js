@@ -15,7 +15,7 @@ export default function Home(){
                 <Category imageList={imageList} setImageList={setImageList} currCateg={currCateg} setCurrCateg={setCurrCateg}/>
                 <GalleryCard imageList={imageList} setImageList={setImageList} currCateg={currCateg} setCurrCateg={setCurrCateg}/>
             </div>
-            <Button />
+            <Button imageList={imageList} setImageList={setImageList} currCateg={currCateg}/>
         </div>
        
     );

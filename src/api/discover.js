@@ -25,8 +25,15 @@ export async function getImagesByDate(category, sortByDate){
 };
 
 
-export async function addToFav(imgName){
-    const reqUrl = `https://micro-assignment-backend-9atx.onrender.com/api/discover/fav/${imgName}`;
+export async function addToFav(imgID){
+    const reqUrl = `https://micro-assignment-backend-9atx.onrender.com/api/discover/fav/${imgID}`;
     const result = await axios.get(reqUrl);
     if(result.data)return result.data;
 };
+
+
+export async function shuffle(category){
+    const reqUrl = `https://micro-assignment-backend-9atx.onrender.com/api/discover/${category}?shuffle=4`;
+    const result = await axios.get(reqUrl);
+    if(result.data)return result.data;
+}
